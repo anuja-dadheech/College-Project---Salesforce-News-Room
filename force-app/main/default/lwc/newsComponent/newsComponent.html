@@ -1,0 +1,95 @@
+<template>
+  <lightning-layout class="slds-page-header slds-page-header_object-home">
+    <lightning-layout-item padding="horizontal-small">
+      <div class="slds-grid">
+        <div class="slds-col slds-size_4-of-5 page-section page-header">
+          <h1 class="slds-text-heading_label">HINDUSTAN NEWS ROOM</h1>
+        </div>
+      </div>
+    </lightning-layout-item>
+
+  </lightning-layout>
+
+  <div class="slds-grid">
+    <div class="slds-col slds-size_2-of-12" style="color: rgb(255, 94, 0) ;background : #93A59B ">
+      <lightning-vertical-navigation onselect={handleSelect} > 
+        <lightning-vertical-navigation-section label="CATEGORIES">
+          <lightning-vertical-navigation-item label="Business" name="business"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+          <lightning-vertical-navigation-item label="Sports" name="sports"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+          <lightning-vertical-navigation-item label="Entertainment" name="entertainment"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+          <lightning-vertical-navigation-item label="Technology" name="techology"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+          <lightning-vertical-navigation-item label="Health" name="health"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+          <lightning-vertical-navigation-item label="Science" name="science"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+          <lightning-vertical-navigation-item label="General" name="general"
+            style=" color: rgb(255, 7, 110); font-size: 13px" >
+          </lightning-vertical-navigation-item>
+        </lightning-vertical-navigation-section>
+      </lightning-vertical-navigation>
+
+    </div>
+
+
+    <div class="slds-col slds-size_10-of-12">
+      <div class="container">
+        <div class="slds-grid slds-gutters slds-wrap justify-center">
+          <template for:each={result} for:item="item">
+            <div class="card" key={item.id}>
+              <img class="card-image" src={item.urlToImage} />
+              <div class="card-text">
+                <span class="date">{item.date}</span>
+                <h2>{item.title}</h2>
+              </div>
+              <div class="card-stats" onclick={showModal} data-item={item.id}>
+                Read More
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+    aria-describedby="modal-content-id-1" class={modalClass}>
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+          onclick={closeModal}>
+          <lightning-icon icon-name="utility:close" alternative-text="Close Modal" variant="inverse" size="small">
+          </lightning-icon>
+        </button>
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+          {selectedNews.title}
+        </h2>
+      </header>
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <img src={selectedNews.urlToImage} />
+        <div>
+          <div>Source - {selectedNews.name}</div>
+          <div class="date">{selectedNews.date}</div>
+        </div>
+        <p class="content">
+          {selectedNews.content}
+          <a href={selectedNews.url} target="_blank">Go to source</a>
+        </p>
+        <template if:true={selectedNews.author}>
+          <div class="footer">
+            <div>Author - {selectedNews.author}</div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+  <div class={modalBackdropClass}></div>
+</template>
